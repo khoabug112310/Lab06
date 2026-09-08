@@ -1,0 +1,43 @@
+@model Lab06WebClient.Models.TransferViewModel
+<div class="container">
+    <h2>Account Transfer</h2>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Welcome, <strong>@ViewBag.FullName</strong></h5>
+            <p class="card-text mb-1">Account Number: <strong>@ViewBag.Account</strong></p>
+            <p class="card-text text-success">Current Balance: <strong>@(decimal.TryParse(ViewBag.Balance?.ToString(), out decimal bal) ? bal.ToString("N2") : ViewBag.Balance)</strong></p>
+        </div>
+    </div>
+    <div class="mb-3">
+        <a asp-controller="Transfer" asp-action="History" class="btn btn-secondary">View Transfer History</a>
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-outline-danger">Logout</a>
+    </div>
+</div>
+<hr/>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Message"]
+    </div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+<div class="container">
+    <form asp-action="Transfer" method="post">
+        <div class="form-group mb-3">
+            <label asp-for="ToAccount" class="form-label">To Account Number</label>
+            <input asp-for="ToAccount" class="form-control" placeholder="Enter recipient account number" />
+            <span asp-validation-for="ToAccount" class="text-danger"></span>
+        </div>
+        <div class="form-group mb-3">
+            <label asp-for="Amount" class="form-label">Amount</label>
+            <input asp-for="Amount" type="number" step="any" min="1" class="form-control" placeholder="Enter amount to transfer" />
+            <span asp-validation-for="Amount" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Transfer Now</button>
+    </form>
+</div>

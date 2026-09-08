@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Lab06WebApi\\Lab06WebApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Lab06WebClient\\Lab06WebClient.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

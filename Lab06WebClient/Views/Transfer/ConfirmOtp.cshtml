@@ -1,0 +1,56 @@
+@model Lab06WebClient.Models.ConfirmOtpViewModel
+
+<div class="container mt-4" style="max-width: 600px;">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white text-center py-3">
+            <h4 class="mb-0">Transaction Verification (OTP)</h4>
+        </div>
+        <div class="card-body p-4">
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> @ViewBag.Error
+                </div>
+            }
+
+            <div class="alert alert-info" role="alert">
+                <p class="mb-1">A 6-digit OTP verification code has been sent to your email: <strong>@Model.MaskedEmail</strong></p>
+                <small class="text-muted">The OTP code is valid for <strong>3 minutes</strong>.</small>
+            </div>
+
+            <div class="card bg-light mb-4 border-0">
+                <div class="card-body">
+                    <h6 class="text-muted mb-3">TRANSACTION DETAILS</h6>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-secondary">Recipient Account:</span>
+                        <strong>@Model.ToAccount @(string.IsNullOrEmpty(Model.ToFullName) ? "" : $"({Model.ToFullName})")</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-0">
+                        <span class="text-secondary">Transfer Amount:</span>
+                        <strong class="text-danger fs-5">@Model.Amount.ToString("N2")</strong>
+                    </div>
+                </div>
+            </div>
+
+            <form asp-action="ConfirmOtp" method="post">
+                <input type="hidden" asp-for="TransactionId" />
+                <input type="hidden" asp-for="ToAccount" />
+                <input type="hidden" asp-for="ToFullName" />
+                <input type="hidden" asp-for="Amount" />
+                <input type="hidden" asp-for="MaskedEmail" />
+
+                <div class="mb-4 text-center">
+                    <label asp-for="Otp" class="form-label fw-bold">Enter 6-digit OTP Code:</label>
+                    <input asp-for="Otp" class="form-control text-center fs-3 letter-spacing fw-bold" 
+                           placeholder="000000" maxlength="6" autofocus style="letter-spacing: 8px;" />
+                    <span asp-validation-for="Otp" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg">Confirm Transfer</button>
+                    <a asp-action="Index" class="btn btn-outline-secondary">Cancel Transaction</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

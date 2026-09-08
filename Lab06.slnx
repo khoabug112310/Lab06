@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Lab06PasswordApp/Lab06PasswordHashs.csproj" />
+  <Project Path="Lab06WebApi/Lab06WebApi.csproj" />
+  <Project Path="Lab06WebClient/Lab06WebClient.csproj" />
+</Solution>
